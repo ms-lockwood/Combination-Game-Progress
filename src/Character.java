@@ -35,35 +35,35 @@ public class Character {public int xpos;        //the x position
 
     public void move() {
         //horizontal
-        if (leftPressed==true) {
-            dx = -2;
-        } else if (rightPressed==true) {
-            dx = 2;
+        if (leftPressed && ypos>0 && xpos>0) {
+            dx = -4;
+        } else if (rightPressed && ypos>0 && xpos<(1000-width)) {
+            dx = 4;
         } else {
             dx = 0;
         }
-        if (ypos < 0) {
-            dy = 0;
-        }
-        if (ypos > 700) {
-            dy = 0;
-        }
-        if (xpos > 1000 - width) {
-            dx = 0;
-        }
-        if (xpos < 0) {
-            dx = 0;
-        }
-        if (ypos < 0) {
-            dy = 0;
-        }
-        if (ypos > 700 - height) {
-            dy = 0;
-            xpos = xpos + dx;
-            ypos = ypos + dy;
-            rec = new Rectangle(xpos, ypos, width, height);
-        }
 
+//        if (ypos < 0) {
+//            dy = 0;
+//        }
+//        if (ypos > 700) {
+//            dy = 0;
+//        }
+//        if (xpos > 1000 - width) {
+//            dx = 0;
+//        }
+//        if (xpos < 0) {
+//            dx = 0;
+//        }
+//        if (ypos < 0) {
+//            dy = 0;
+//        }
+//        if (ypos > 700 - height) {
+//            dy = 0;
+//        }
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+        rec = new Rectangle(xpos, ypos, width, height);
 
     }
 

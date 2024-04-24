@@ -32,8 +32,7 @@ public class GameLand implements Runnable, KeyListener {
     public boolean isPlaying=false;
     public boolean startScreen1=true;
     public boolean level1;
-    public boolean startScreen2;
-    public boolean level2;
+
     public boolean gameOver;
 
     public int score;
@@ -102,28 +101,19 @@ public class GameLand implements Runnable, KeyListener {
 //User Method Section
 //
 // put your code to do things here.
-    public void runCorrectLevel(){
+    public void runCorrectLevel() {
         /**This method gets called when you click the space bar
          * It will DECIDE WHICH LEVEL METHODS TO CALL BASED ON BOOLEANS */
-        if(startScreen1){
-            startScreen1=false;
-            level1=true;
+        if (startScreen1) {
+            startScreen1 = false;
+            level1 = true;
             startLevel1();
             System.out.println("Level 1 begins now!");
         }
-        if(level1&&score>14){//transition from level 1 to pause screen
-            level1=false;
-            startScreen2=true;
-        }
-        if (startScreen2){//transition from pause screen to level 2
-            startScreen2=false;
-            level2=true;
-            startLevel2();
-            // System.out.println("level 2 has started");
-        }
-        if(gameOver){ //restart the game transition from game over to level 1
-            gameOver=false;
-            level1=true;
+
+        if (gameOver) { //restart the game transition from game over to level 1
+            gameOver = false;
+            level1 = true;
             startLevel1();
         }
     }
@@ -135,55 +125,28 @@ public class GameLand implements Runnable, KeyListener {
         cherry = new ArrayList<>();
         for (int k = 0; k < 10; k = k + 1) { //we must use an int for k<10 and not lemon.size
             int randX = (int) (Math.random() * 1000);
-            int randY = k*(-700);
+            int randY = k*(-700)+0;
             lemon.add(new Character(randX, randY, 0, 3, 100, 100));
         }
         for (int l = 0; l < 10; l = l + 1) {
             int randX = (int) (Math.random() * 1000);
-            int randY = l*(-700);
+            int randY = l*(-700)+700;
             lime.add(new Character(randX, randY, 0, 3, 75, 75));
         }
         for (int s = 0; s < 10; s = s + 1) {
             int randX = (int) (Math.random() * 1000);
-            int randY = s*(-700);
+            int randY = s*(-700)+1400;
             strawberry.add(new Character(randX, randY, 0, 3, 50, 50));
         }
         for (int c = 0; c < 10; c = c + 1) {
             int randX = (int) (Math.random() * 1000);
-            int randY = c*(-700);
+            int randY = c*(-700)+2100;
             cherry.add(new Character(randX, randY, 0, 3, 50, 50));
         }
         //reset start time
         startTime=System.currentTimeMillis();
         //reset score
         score=0;
-    }
-
-    public void startLevel2(){
-        lemon = new ArrayList<>();
-        lime = new ArrayList<>();
-        strawberry = new ArrayList<>();
-        cherry = new ArrayList<>();
-        for (int k = 0; k < 10; k = k + 1) { //we must use an int for k<10 and not lemon.size
-            int randX = (int) (Math.random() * 1000);
-            int randY = k*(-700);
-            lemon.add(new Character(randX, randY, 0, 3, 100, 100));
-        }
-        for (int l = 0; l < 10; l = l + 1) {
-            int randX = (int) (Math.random() * 1000);
-            int randY = l*(-700);
-            lime.add(new Character(randX, randY, 0, 3, 75, 75));
-        }
-        for (int s = 0; s < 10; s = s + 1) {
-            int randX = (int) (Math.random() * 1000);
-            int randY = s*(-700);
-            strawberry.add(new Character(randX, randY, 0, 3, 50, 50));
-        }
-        for (int c = 0; c < 10; c = c + 1) {
-            int randX = (int) (Math.random() * 1000);
-            int randY = c*(-700);
-            cherry.add(new Character(randX, randY, 0, 3, 50, 50));
-        }
     }
 
     public void timer(){
@@ -218,37 +181,40 @@ public class GameLand implements Runnable, KeyListener {
             g.drawImage(pink, 0, 0, WIDTH, HEIGHT, null);
             g.drawString("Score: "+score,100,60);
             g.drawString("Time: "+elapsedTime,900,60);
-            if (!lemon.isEmpty()) {
+            if (lemon!=null) {
                 for (int k = 0; k < lemon.size(); k = k + 1) {
-                    g.drawImage(lemonPic, lemon.get(k).xpos, lemon.get(k).ypos, lemon.get(k).width, lemon.get(k).height, null);
+                    if (lemon.get(k).isAlive) {
+                        g.drawImage(lemonPic, lemon.get(k).xpos, lemon.get(k).ypos, lemon.get(k).width, lemon.get(k).height, null);
+                    }
                 }
             }
-            if (!lime.isEmpty()) {
+            if (lime!=null) {
                 for (int l = 0; l < lime.size(); l = l + 1) {
-                    g.drawImage(limePic, lime.get(l).xpos, lime.get(l).ypos, lime.get(l).width, lime.get(l).height, null);
+                    if (lime.get(l).isAlive) {
+                        g.drawImage(limePic, lime.get(l).xpos, lime.get(l).ypos, lime.get(l).width, lime.get(l).height, null);
+                    }
                 }
             }
-            if (!strawberry.isEmpty()) {
+            if (strawberry!=null) {
                 for (int s = 0; s < strawberry.size(); s = s + 1) {
-                    g.drawImage(strawberryPic, strawberry.get(s).xpos, strawberry.get(s).ypos, strawberry.get(s).width, strawberry.get(s).height, null);
+                    if (strawberry.get(s).isAlive) {
+                        g.drawImage(strawberryPic, strawberry.get(s).xpos, strawberry.get(s).ypos, strawberry.get(s).width, strawberry.get(s).height, null);
+                    }
                 }
             }
-            if (!cherry.isEmpty()) {
+            if (cherry!=null) {
                 for (int c = 0; c < cherry.size(); c = c + 1) {
+                    if(cherry.get(c).isAlive){
                     g.drawImage(cherryPic, cherry.get(c).xpos, cherry.get(c).ypos, cherry.get(c).width, cherry.get(c).height, null);
+                    }
                 }
             }
+
         }
-        if(startScreen2){
-            g.drawString("Press space bar to begin Level 2", 400, 350);
-        }
-        if(level2){
-            g.drawImage(background2,0,0,WIDTH,HEIGHT,null);
-            g.drawString("Score: "+score,100,60);
-            g.drawString("Time: "+elapsedTime,900,60);
-        }
-        if(gameOver){
-            g.drawImage(gameOverPic,0,0,400,350,null);
+        if(gameOver) {
+            if (startTime > 45) {
+                g.drawImage(gameOverPic, 0, 0, 400, 350, null);
+            }
         }
 
         //dispose the images each time(this allows for the illusion of movement).
@@ -259,68 +225,110 @@ public class GameLand implements Runnable, KeyListener {
     public void moveThings() {
         // lime.move();
         //call the move() method code from your object class
-        if (!cherry.isEmpty()) {
+        if (cherry!=null) {
             for (int c = 0; c < cherry.size(); c = c + 1) {
                 cherry.get(c).move();
             }
         }
-        if (!strawberry.isEmpty()) {
+        if (strawberry!=null) {
             for (int s = 0; s < strawberry.size(); s = s + 1) {
                 strawberry.get(s).move();
             }
         }
-        if (!lime.isEmpty()) {
+        if (lime!=null) {
             for (int l = 0; l < lime.size(); l = l + 1) {
                 lime.get(l).move();
             }
         }
-        if (!lemon.isEmpty()) {
+        if (lemon!=null) {
             for (int k = 0; k < lemon.size(); k = k + 1) {
                     lemon.get(k).move();
             }
         }
     }
 
-    public void collisions() {
+    public void collisions() { //we need to include !=null
         /**STEP 6: use array list, check collisions, create new characters**/
-        for (int c = 0; c < cherry.size(); c = c + 1) {
-            for (int d = 0; d < cherry.size(); d = d + 1) {
-                if (cherry.get(c).rec.intersects(cherry.get(d).rec) && cherry.get(c).isAlive && cherry.get(d).isAlive && c != d) {
-                    strawberry.add(new Character(cherry.get(c).xpos, cherry.get(c).ypos, 0, 3, 30, 30));
+       if(cherry!=null) {
+           for (int c = 0; c < cherry.size(); c = c + 1) {
+               for (int d = 0; d < cherry.size(); d = d + 1) {
+                   if (cherry.get(c).rec.intersects(cherry.get(d).rec) && cherry.get(c).isAlive && cherry.get(d).isAlive && c != d) {
+                       strawberry.add(new Character(cherry.get(c).xpos-100, cherry.get(c).ypos-100, 0, 3, 50, 50));
+
+
+                   cherry.get(c).isAlive = false;
+                   cherry.get(d).isAlive=false;
+                   cherry.get(c).dx = 0;
+                   cherry.get(c).dy = 0;
+                   cherry.get(c).xpos= 2000;
+                   cherry.get(d).xpos=2000;
+                   System.out.println("Score: "+ score);
+                   score=score+1;
+                   }
+               }
+           }
+       }
+      if(strawberry!=null) {
+          for (int s = 0; s < strawberry.size(); s = s + 1) {
+              for (int m = 0; m < strawberry.size(); m = m + 1) {
+                  if (strawberry.get(s).rec.intersects(strawberry.get(m).rec) && strawberry.get(s).isAlive && strawberry.get(m).isAlive && s != m) {
+                      lime.add(new Character(strawberry.get(s).xpos, strawberry.get(s).ypos, 0, 3, 75, 75));
+
+                  strawberry.get(s).isAlive = false;
+                  strawberry.get(m).isAlive=false;
+                  strawberry.get(s).dx = 0;
+                  strawberry.get(s).dy = 0;
+                  strawberry.get(s).xpos=2000;
+                  strawberry.get(m).xpos=2000;
+                  System.out.println("Score: "+ score);
+                  score=score+2;
+                  }
+              }
+          }
+      }
+      if(lime!=null) {
+            for (int l = 0; l < lime.size(); l = l + 1) {
+                for (int q = 0; q < lime.size(); q = q + 1) {
+                    if (lime.get(l).rec.intersects(lime.get(q).rec) && lime.get(l).isAlive && lime.get(q).isAlive && l != q) {
+                        lemon.add(new Character(lime.get(l).xpos, lime.get(l).ypos, 0, 3, 100, 100));
+
+                        lime.get(l).isAlive = false;
+                        lime.get(q).isAlive=false;
+                        lime.get(l).dx = 0;
+                        lime.get(l).dy = 0;
+                        lime.get(l).xpos=2000;
+                        lime.get(q).xpos=2000;
+                        System.out.println("Score: "+ score);
+                        score=score+3;
+                    }
                 }
-                cherry.get(c).isAlive = false;
-                cherry.get(c).dx = 0;
-                cherry.get(c).dy = 0;
             }
         }
-        for (int s = 0; s < strawberry.size(); s = s + 1) {
-            for (int m = 0; m < strawberry.size(); m = m + 1) {
-                if (strawberry.get(s).rec.intersects(strawberry.get(m).rec) && strawberry.get(s).isAlive && strawberry.get(m).isAlive && s != m) {
-                    lime.add(new Character(strawberry.get(s).xpos, strawberry.get(s).ypos, 0, 3, 30, 30));
-                }
-                strawberry.get(s).isAlive = false;
-                strawberry.get(s).dx = 0;
-                strawberry.get(s).dy = 0;
-            }
-        }
-        for (int l = 0; l < lime.size(); l = l + 1) {
-            for (int q = 0; q < lime.size(); q = q + 1) {
-                if (lime.get(l).rec.intersects(lime.get(q).rec) && lime.get(l).isAlive && lime.get(q).isAlive && l != q) {
-                    lemon.add(new Character(lime.get(l).xpos, lime.get(l).ypos, 0, 3, 30, 30));
-                }
-                lime.get(l).isAlive = false;
-                lime.get(l).dx = 0;
-                lime.get(l).dy = 0;
-            }
-        }
-        if(level1&& score>14){
+      if(lemon!=null){
+          for(int k=0; k<lemon.size(); k=k+1){
+              for(int a=0; a<lemon.size(); a=a+1){
+                  if(lemon.get(k).rec.intersects(lemon.get(a).rec) && lemon.get(k).isAlive && lemon.get(a).isAlive && k !=a){
+
+                      lemon.get(k).isAlive = false;
+                      lemon.get(a).isAlive=false;
+                      lemon.get(k).dx=0;
+                      lemon.get(k).dy=0;
+                      lemon.get(k).xpos=2000;
+                      lemon.get(a).xpos=2000;
+                      System.out.println("Score: "+ score);
+                      score=score+5;
+                  }
+              }
+          }
+      }
+        /*if(level1&& score>14){
             level1=false;
             startScreen2=true;
         }
         if(level2&& score>30){
             level2=false;
             gameOver=true;
-        }
+        }*/
     }
 
 
@@ -373,36 +381,44 @@ public class GameLand implements Runnable, KeyListener {
         char key = e.getKeyChar();
         int keyCode = e.getKeyCode();
         System.out.println("Key: " + key + " Keycode: " + keyCode);
-        for (int c = 0; c < cherry.size(); c = c + 1) {
-            if (keyCode == 65) {//left
-                cherry.get(c).leftPressed = true;
-            }
-            if (keyCode == 68) {//right
-                cherry.get(c).rightPressed = true;
-            }
-        }
-        for (int s = 0; s < strawberry.size(); s = s + 1) {
-            if (keyCode == 65) {//left
-                strawberry.get(s).leftPressed = true;
-            }
-            if (keyCode == 68) {//right
-                strawberry.get(s).rightPressed = true;
-            }
-        }
-        for (int l = 0; l < lime.size(); l = l + 1) {
-            if (keyCode == 65) {//left
-                lime.get(l).leftPressed = true;
-            }
-            if (keyCode == 68) {//right
-                lime.get(l).rightPressed = true;
+       if(cherry!=null) {
+           for (int c = 0; c < cherry.size(); c = c + 1) {
+               if (keyCode == 65) {//left
+                   cherry.get(c).leftPressed = true;
+               }
+               if (keyCode == 68) {//right
+                   cherry.get(c).rightPressed = true;
+               }
+           }
+       }
+        if(strawberry!=null) {
+            for (int s = 0; s < strawberry.size(); s = s + 1) {
+                if (keyCode == 65) {//left
+                    strawberry.get(s).leftPressed = true;
+                }
+                if (keyCode == 68) {//right
+                    strawberry.get(s).rightPressed = true;
+                }
             }
         }
-        for (int k = 0; k < lemon.size(); k = k + 1) {
-            if (keyCode == 65) {//left
-                lemon.get(k).leftPressed = true;
+        if(lime!=null) {
+            for (int l = 0; l < lime.size(); l = l + 1) {
+                if (keyCode == 65) {//left
+                    lime.get(l).leftPressed = true;
+                }
+                if (keyCode == 68) {//right
+                    lime.get(l).rightPressed = true;
+                }
             }
-            if (keyCode == 68) {//right
-                lemon.get(k).rightPressed = true;
+        }
+        if(lemon!=null) {
+            for (int k = 0; k < lemon.size(); k = k + 1) {
+                if (keyCode == 65) {//left
+                    lemon.get(k).leftPressed = true;
+                }
+                if (keyCode == 68) {//right
+                    lemon.get(k).rightPressed = true;
+                }
             }
         }
     }
@@ -411,36 +427,49 @@ public class GameLand implements Runnable, KeyListener {
     public void keyReleased(KeyEvent e) {
         char key = e.getKeyChar();
         int keyCode = e.getKeyCode();
-        for (int c = 0; c < cherry.size(); c = c + 1) {
-            if (keyCode == 65) {//left
-                cherry.get(c).leftPressed = false;
-            }
-            if (keyCode == 68) {//right
-                cherry.get(c).rightPressed = false;
+        System.out.println("released key: "+ keyCode);
+
+        if(keyCode==32){
+            runCorrectLevel();
+        }
+        if(cherry!=null) {
+            for (int c = 0; c < cherry.size(); c = c + 1) {
+                if (keyCode == 65) {//left
+                    cherry.get(c).leftPressed = false;
+                }
+                if (keyCode == 68) {//right
+                    cherry.get(c).rightPressed = false;
+                }
             }
         }
-        for (int s = 0; s < strawberry.size(); s = s + 1) {
-            if (keyCode == 65) {//left
-                strawberry.get(s).leftPressed = false;
-            }
-            if (keyCode == 68) {//right
-                strawberry.get(s).rightPressed = false;
-            }
-        }
-        for (int l = 0; l < lime.size(); l = l + 1) {
-            if (keyCode == 65) {//left
-                lime.get(l).leftPressed = false;
-            }
-            if (keyCode == 68) {//right
-                lime.get(l).rightPressed = false;
+        if(strawberry!=null) {
+            for (int s = 0; s < strawberry.size(); s = s + 1) {
+                if (keyCode == 65) {//left
+                    strawberry.get(s).leftPressed = false;
+                }
+                if (keyCode == 68) {//right
+                    strawberry.get(s).rightPressed = false;
+                }
             }
         }
-        for (int k = 0; k < lemon.size(); k = k + 1) {
-            if (keyCode == 65) {//left
-                lemon.get(k).leftPressed = false;
+        if(lime!=null) {
+            for (int l = 0; l < lime.size(); l = l + 1) {
+                if (keyCode == 65) {//left
+                    lime.get(l).leftPressed = false;
+                }
+                if (keyCode == 68) {//right
+                    lime.get(l).rightPressed = false;
+                }
             }
-            if (keyCode == 68) {//right
-                lemon.get(k).rightPressed = false;
+        }
+        if(lemon!=null) {
+            for (int k = 0; k < lemon.size(); k = k + 1) {
+                if (keyCode == 65) {//left
+                    lemon.get(k).leftPressed = false;
+                }
+                if (keyCode == 68) {//right
+                    lemon.get(k).rightPressed = false;
+                }
             }
         }
     }

@@ -123,24 +123,24 @@ public class GameLand implements Runnable, KeyListener {
         lime = new ArrayList<>();
         strawberry = new ArrayList<>();
         cherry = new ArrayList<>();
-        for (int k = 0; k < 10; k = k + 1) { //we must use an int for k<10 and not lemon.size
+        for (int k = 21; k < 301; k = k + 28) { //we must use an int for k<10 and not lemon.size
             int randX = (int) (Math.random() * 1000);
-            int randY = k*(-700)+0;
+            int randY = k*(-100);
             lemon.add(new Character(randX, randY, 0, 3, 100, 100));
         }
-        for (int l = 0; l < 10; l = l + 1) {
+        for (int l = 14; l < 295; l = l + 28) {
             int randX = (int) (Math.random() * 1000);
-            int randY = l*(-700)+700;
+            int randY = l*(-100);
             lime.add(new Character(randX, randY, 0, 3, 75, 75));
         }
-        for (int s = 0; s < 10; s = s + 1) {
+        for (int s = 7; s < 288; s = s + 28) {
             int randX = (int) (Math.random() * 1000);
-            int randY = s*(-700)+1400;
+            int randY = s*(-100);
             strawberry.add(new Character(randX, randY, 0, 3, 50, 50));
         }
-        for (int c = 0; c < 10; c = c + 1) {
+        for (int c = 0; c < 281; c = c + 28) {
             int randX = (int) (Math.random() * 1000);
-            int randY = c*(-700)+2100;
+            int randY = c*(-100);
             cherry.add(new Character(randX, randY, 0, 3, 50, 50));
         }
         //reset start time

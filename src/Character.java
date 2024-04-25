@@ -61,7 +61,7 @@ public class Character {public int xpos;        //the x position
 //        if (ypos > 700 - height) {
 //            dy = 0;
 //        }
-        if(ypos<650) {
+        if(ypos<(700-height)) {
             xpos = xpos + dx;
             ypos = ypos + dy;
             rec = new Rectangle(xpos, ypos, width, height);
